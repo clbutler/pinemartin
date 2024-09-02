@@ -1,0 +1,6 @@
+rule download_pine_martin_sitings:
+    output:
+        'outputs/pine_martins_sightings.csv'
+
+    script:
+        'scripts/pm_api_collect.py'

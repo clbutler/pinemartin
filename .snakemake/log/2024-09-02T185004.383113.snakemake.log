@@ -1,0 +1,6 @@
+Building DAG of jobs...
+MissingInputException in rule download_pine_martin_sitings in file /Users/chrisbutler/Documents/pine_martin/pine_martin, line 1:
+Missing input files for rule download_pine_martin_sitings:
+    output: outputs/pine_martins_sightings.csv
+    affected files:
+        https://records-ws.nbnatlas.org/occurrences/search?q=lsid%3ANHMSYS0000080190&fq=occurrence_status%3Apresent&qc=state%3AScotland
