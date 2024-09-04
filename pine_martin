@@ -1,6 +1,18 @@
-rule download_pine_martin_sitings:
+rule download_pine_martin_sightings:
     output:
         'outputs/pine_martins_sightings.csv'
-
+    conda:
+        'pine_martin_env.yml'
     script:
         'scripts/pm_api_collect.py'
+
+rule clean_pine_martin_sightings:
+    input:
+      'outputs/pine_martins_sightings.csv'
+    output:
+      'outputs/pine_martins_sightings_clean.csv',
+      'outputs/pine_martins_sightings_plot.pdf'
+    conda:
+        'pine_martin_env.yml'
+    script:
+        'scripts/pm_clean.py'
