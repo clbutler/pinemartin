@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
 
-This is a temporary script file.
-"""
 
 #import packages 
 import requests
@@ -13,8 +9,16 @@ import pandas as pd
 base_url = 'https://records-ws.nbnatlas.org/occurrences/search?q=lsid%3ANHMSYS0000080190&fq=occurrence_status%3Apresent&qc=state%3AScotland'
 # Make a GET request to the API
 
+
+#new piece of code that lets me see how many total records there are in base url
+first_response = requests.get(base_url)
+first_data = first_response.json()
+total_records = first_data.get('totalRecords')
+
+
+
 page_size = 100  # Number of items per page
-total_items = 8915  # Total number of items to retrieve
+total_items = total_records  # Total number of items to retrieve
 items_fetched = 0  # Counter for items fetched
 
 # To store all items

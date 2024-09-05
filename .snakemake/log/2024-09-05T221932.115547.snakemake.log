@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                            count
+---------------------------  -------
+clean_pine_martin_sightings        1
+total                              1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Sep  5 22:19:32 2024]
+localrule clean_pine_martin_sightings:
+    input: outputs/pine_martins_sightings.csv
+    output: outputs/pine_martins_sightings_clean.csv, outputs/pine_martins_sightings_plot.pdf
+    jobid: 1
+    reason: Forced execution
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Thu Sep  5 22:21:36 2024]
+Finished job 1.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2024-09-05T221932.115547.snakemake.log

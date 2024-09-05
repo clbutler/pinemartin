@@ -1,0 +1,53 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                               count
+------------------------------  -------
+clean_pine_martin_sightings           1
+download_pine_martin_sightings        1
+total                                 2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Sep  5 22:12:40 2024]
+localrule download_pine_martin_sightings:
+    output: outputs/pine_martins_sightings.csv
+    jobid: 0
+    reason: Code has changed since last execution
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Thu Sep  5 22:15:43 2024]
+Finished job 0.
+1 of 2 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Sep  5 22:15:43 2024]
+localrule clean_pine_martin_sightings:
+    input: outputs/pine_martins_sightings.csv
+    output: outputs/pine_martins_sightings_clean.csv, outputs/pine_martins_sightings_plot.pdf
+    jobid: 1
+    reason: Input files updated by another job: outputs/pine_martins_sightings.csv
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+RuleException:
+CalledProcessError in file /Users/chrisbutler/Documents/pine_martin/pine_martin, line 18:
+Command 'set -euo pipefail;  /Users/chrisbutler/anaconda3/envs/pine_martin/bin/python3.12 /Users/chrisbutler/Documents/pine_martin/.snakemake/scripts/tmpoyfrjd0n.pm_clean.py' returned non-zero exit status 1.
+[Thu Sep  5 22:15:44 2024]
+Error in rule clean_pine_martin_sightings:
+    jobid: 1
+    input: outputs/pine_martins_sightings.csv
+    output: outputs/pine_martins_sightings_clean.csv, outputs/pine_martins_sightings_plot.pdf
+    conda-env: /Users/chrisbutler/Documents/pine_martin/.snakemake/conda/77455e3e2502af1ae574a5776ceb467e_
+
+Removing output files of failed job clean_pine_martin_sightings since they might be corrupted:
+outputs/pine_martins_sightings_clean.csv
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-09-05T221240.735719.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

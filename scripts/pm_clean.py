@@ -10,6 +10,7 @@ Created on Wed Sep  4 21:39:19 2024
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 pm_unclean = pd.read_csv(snakemake.input[0])
 
 #step 1 only keep certain columns
@@ -45,15 +46,27 @@ pm_clean.to_csv(snakemake.output[0])
 
 #initial plot
 pm_plot = pm_clean.set_index('Year')
-pm_plot = pm_plot.resample('Y').count()
+pm_plot = pm_plot.resample('Ye').count()
 pm_plot = pm_plot[pm_plot.index > '2000']
 
 
-fix, ax = plt.subplots(figsize = (10,10))
+
+
+
+# Create the plot
+fig, ax = plt.subplots(figsize=(15, 10))
+
+# Plot your data
 plt.plot(pm_plot.index, pm_plot['lon'])
-ax.set_xlabel('\nYear', fontsize = 15)
-ax.set_ylabel('Pine Martin Sightings\n', fontsize = 15)
-ax.set_title('Verified Pine Martin Sightings Since 2020', fontsize = 30)
+
+
+
+# Set labels and title
+ax.set_xlabel('\nYear', fontsize=15)
+ax.set_ylabel('Pine Martin Sightings\n', fontsize=15)
+ax.set_title('Verified Pine Martin Sightings Since 2020', fontsize=30)
+
+# Save and show the plot
 plt.savefig(snakemake.output[1])
 plt.show()
 
