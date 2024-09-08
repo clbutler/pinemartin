@@ -1,0 +1,81 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                               count
+------------------------------  -------
+all                                   1
+clean_pine_martin_sightings           1
+create_chloropleth                    1
+create_location_map                   1
+download_pine_martin_sightings        1
+total                                 5
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Sep  8 23:11:22 2024]
+localrule download_pine_martin_sightings:
+    output: outputs/pine_martins_sightings.csv
+    jobid: 3
+    reason: Missing output files: outputs/pine_martins_sightings.csv
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 23:11:30 2024]
+Finished job 3.
+1 of 5 steps (20%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Sep  8 23:11:30 2024]
+localrule clean_pine_martin_sightings:
+    input: outputs/pine_martins_sightings.csv
+    output: outputs/pine_martins_sightings_clean.csv
+    jobid: 2
+    reason: Missing output files: outputs/pine_martins_sightings_clean.csv; Input files updated by another job: outputs/pine_martins_sightings.csv
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 23:11:31 2024]
+Finished job 2.
+2 of 5 steps (40%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Sep  8 23:11:31 2024]
+localrule create_location_map:
+    input: outputs/pine_martins_sightings_clean.csv
+    output: outputs/sightings_map.html
+    jobid: 4
+    reason: Missing output files: outputs/sightings_map.html; Input files updated by another job: outputs/pine_martins_sightings_clean.csv
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 23:11:31 2024]
+localrule create_chloropleth:
+    input: outputs/pine_martins_sightings_clean.csv
+    output: outputs/sightings_per_county.html
+    jobid: 1
+    reason: Missing output files: outputs/sightings_per_county.html; Input files updated by another job: outputs/pine_martins_sightings_clean.csv
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 23:11:33 2024]
+Finished job 4.
+3 of 5 steps (60%) done
+[Sun Sep  8 23:12:03 2024]
+Finished job 1.
+4 of 5 steps (80%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Sep  8 23:12:03 2024]
+localrule all:
+    input: outputs/sightings_per_county.html, outputs/sightings_map.html
+    jobid: 0
+    reason: Input files updated by another job: outputs/sightings_map.html, outputs/sightings_per_county.html
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 23:12:03 2024]
+Finished job 0.
+5 of 5 steps (100%) done
+Complete log: .snakemake/log/2024-09-08T231122.465603.snakemake.log

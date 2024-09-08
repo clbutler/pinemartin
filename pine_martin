@@ -1,3 +1,7 @@
+rule all:
+  input: 'outputs/sightings_per_county.html', 'outputs/sightings_map.html'
+
+
 rule download_pine_martin_sightings:
     output:
         'outputs/pine_martins_sightings.csv'
@@ -11,8 +15,27 @@ rule clean_pine_martin_sightings:
       'outputs/pine_martins_sightings.csv'
     output:
       'outputs/pine_martins_sightings_clean.csv',
-      'outputs/pine_martins_sightings_plot.pdf'
     conda:
         'pine_martin_env.yml'
     script:
         'scripts/pm_clean.py'
+
+rule create_location_map:
+    input:
+      'outputs/pine_martins_sightings_clean.csv'
+    output:
+      'outputs/sightings_map.html',
+    conda:
+        'pine_martin_env.yml'
+    script:
+        'scripts/pm_mapping.py'
+
+rule create_chloropleth:
+  input:
+    'outputs/pine_martins_sightings_clean.csv'
+  output:
+    'outputs/sightings_per_county.html'
+  conda:
+    'pine_martin_env.yml'
+  script:
+    'scripts/pm_chloropleth.py'

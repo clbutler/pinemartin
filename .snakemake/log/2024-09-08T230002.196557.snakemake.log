@@ -1,0 +1,26 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                    count
+-------------------  -------
+create_location_map        1
+total                      1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Sep  8 23:00:02 2024]
+localrule create_location_map:
+    input: outputs/pine_martins_sightings_clean.csv
+    output: outputs/sightings_map.html
+    jobid: 0
+    reason: Forced execution
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 23:00:03 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2024-09-08T230002.196557.snakemake.log

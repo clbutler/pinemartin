@@ -1,0 +1,25 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                   count
+------------------  -------
+create_chloropleth        1
+total                     1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Sep  8 22:58:44 2024]
+localrule create_chloropleth:
+    output: outputs/sightings_per_county.html
+    jobid: 0
+    reason: Forced execution
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 22:59:05 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2024-09-08T225843.877332.snakemake.log

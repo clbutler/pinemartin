@@ -1,0 +1,47 @@
+Building DAG of jobs...
+Using shell: /bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Conda environments: ignored
+Job stats:
+job                               count
+------------------------------  -------
+create_chloropleth                    1
+download_pine_martin_sightings        1
+total                                 2
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Sep  8 22:41:24 2024]
+localrule download_pine_martin_sightings:
+    output: outputs/pine_martins_sightings.csv
+    jobid: 0
+    reason: Missing output files: outputs/pine_martins_sightings.csv
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+[Sun Sep  8 22:41:24 2024]
+localrule create_chloropleth:
+    output: outputs/sightings_per_county.html
+    jobid: 1
+    reason: Forced execution
+    resources: tmpdir=/var/folders/1z/9q2sbs594sj783bxhkj9gfl80000gn/T
+
+RuleException:
+CalledProcessError in file /Users/chrisbutler/Documents/pine_martin/pine_martin, line 35:
+Command 'set -euo pipefail;  /Users/chrisbutler/anaconda3/envs/pine_martin/bin/python3.12 /Users/chrisbutler/Documents/pine_martin/.snakemake/scripts/tmpc6ig3lz6.pm_chloropleth.py' returned non-zero exit status 1.
+[Sun Sep  8 22:41:26 2024]
+Error in rule create_chloropleth:
+    jobid: 1
+    output: outputs/sightings_per_county.html
+    conda-env: /Users/chrisbutler/Documents/pine_martin/.snakemake/conda/77455e3e2502af1ae574a5776ceb467e_
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in rule download_pine_martin_sightings in file /Users/chrisbutler/Documents/pine_martin/pine_martin, line 1:
+Job 0 completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+outputs/pine_martins_sightings.csv (missing locally, parent dir contents: .DS_Store)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-09-08T224124.475331.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

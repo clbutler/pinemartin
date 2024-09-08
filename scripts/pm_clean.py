@@ -11,27 +11,25 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
+
+#pm_unclean = pd.read_csv('../outputs/pine_martins_sightings.csv')
 pm_unclean = pd.read_csv(snakemake.input[0])
 
 #step 1 only keep certain columns
 #print(pm_unclean.columns)
 
-pm_unclean = pm_unclean[['year','decimalLatitude', 'decimalLongitude', 'identificationVerificationStatus', 'vitality', 'basisOfRecord']]
+pm_unclean = pm_unclean[['occurrenceID','year','decimalLatitude', 'decimalLongitude', 'identificationVerificationStatus', 'basisOfRecord']]
 
-#step 2 - only keep alive sightings 
-#print(pm_unclean['vitality'].unique())
 
-pm_unclean = pm_unclean[pm_unclean['vitality'] != 'dead' ]
-
-#step 3 - only keep human sightings
+#step 2 - only keep human sightings
 #print(pm_unclean['basisOfRecord'].unique())
 pm_unclean = pm_unclean[pm_unclean['basisOfRecord'] == 'HumanObservation' ]
 
-#step 4 - only keep verified sightings
+#step 3 - only keep verified sightings
 #print(pm_unclean['identificationVerificationStatus'].unique())
 pm_unclean = pm_unclean[~pm_unclean['identificationVerificationStatus'].isin(['Unconfirmed', 'Unconfirmed - plausible'])]
 
-#step 5 - sort out dates
+#step 4 - sort out dates
 
 pm_unclean['year'] = pd.to_datetime(pm_unclean['year'], format = '%Y')
 pm_unclean = pm_unclean.dropna(subset = 'year')
@@ -44,31 +42,7 @@ pm_clean = pm_clean.rename({'year' : 'Year', 'decimalLatitude' : 'Lat',  'decima
 pm_clean.to_csv(snakemake.output[0])
 
 
-#initial plot
-pm_plot = pm_clean.set_index('Year')
-pm_plot = pm_plot.resample('Ye').count()
-pm_plot = pm_plot[pm_plot.index > '2000']
 
-
-
-
-
-# Create the plot
-fig, ax = plt.subplots(figsize=(15, 10))
-
-# Plot your data
-plt.plot(pm_plot.index, pm_plot['lon'])
-
-
-
-# Set labels and title
-ax.set_xlabel('\nYear', fontsize=15)
-ax.set_ylabel('Pine Martin Sightings\n', fontsize=15)
-ax.set_title('Verified Pine Martin Sightings Since 2020', fontsize=30)
-
-# Save and show the plot
-plt.savefig(snakemake.output[1])
-plt.show()
 
 
 

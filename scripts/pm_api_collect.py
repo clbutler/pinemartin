@@ -1,54 +1,63 @@
-# -*- coding: utf-8 -*-
 
 
-#import packages 
 import requests
 import pandas as pd
 
-#extract data
-base_url = 'https://records-ws.nbnatlas.org/occurrences/search?q=lsid%3ANHMSYS0000080190&fq=occurrence_status%3Apresent&qc=state%3AScotland'
-# Make a GET request to the API
+#User Input
 
+i_year =  input('What year do you wish to investgate?').strip()
 
-#new piece of code that lets me see how many total records there are in base url
-first_response = requests.get(base_url)
-first_data = first_response.json()
-total_records = first_data.get('totalRecords')
+if len(i_year) != 4:
+    print('Please ensure you put your year in YYYY format')
+else:
+    
+    # Base URL
+    base_url = 'https://records-ws.nbnatlas.org/occurrences/search'
 
-
-
-page_size = 100  # Number of items per page
-total_items = total_records  # Total number of items to retrieve
-items_fetched = 0  # Counter for items fetched
-
-# To store all items
-all_items = []
-
-while items_fetched < total_items:
-    # Construct the request URL with pagination parameters
+    # Initial parameters
     params = {
-        'limit': page_size,
-        'offset': items_fetched  # Use the number of items already fetched to set offset
+        'q': 'lsid:NHMSYS0000080190',
+        'fq': 'year:' + str(i_year),
+        'qc': 'state:Scotland',
+        'limit': 100  # Number of records per page
     }
     
-    response = requests.get(base_url, params=params)
+    # Initialize
+    all_records = []
+    offset = 0
+    total_records = None
     
-    if response.status_code == 200:
+    while True:
+        # Update the offset parameter
+        params['offset'] = offset
+    
+        # Fetch data
+        response = requests.get(base_url, params=params)
         data = response.json()
-        items = data.get('occurrences', [])  # Adjust the key based on the actual API response
-        
-        if not items:
-            break  # Exit loop if no more items are returned
-
-        all_items.extend(items)  # Add the new items to the list
-        items_fetched += len(items)  # Update the counter
-        
-    else:
-        print(f"Failed to retrieve data: {response.status_code}")
-        break  # Exit loop in case of failure
-
-print(f"Total items fetched: {len(all_items)}")
-
-df = pd.DataFrame(all_items)
-df.to_csv(snakemake.output[0])
-
+    
+        # Extract records
+        occurrences = data.get('occurrences', [])
+        if not occurrences:
+            break  # Exit loop if no more records are returned
+    
+        all_records.extend(occurrences)
+    
+        # Update offset and total_records
+        offset += len(occurrences)
+    
+        # Check if we have fetched all records
+        if total_records is None:
+            total_records = data.get('totalRecords')
+    
+        # Check if we have fetched all the records
+        if len(all_records) >= total_records:
+            break
+    
+    # Convert to DataFrame
+    df = pd.DataFrame(all_records)
+    
+    df.to_csv(snakemake.output[0])
+    
+    
+    
+    print(f"Total records fetched: {len(df)}")
